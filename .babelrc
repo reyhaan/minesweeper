@@ -1,7 +1,8 @@
 {
-    "presets": ["env"],
-    "plugins": [
-      ["@babel/plugin-proposal-decorators", { "legacy": true }],
-      ["transform-class-properties"]
-    ]
-  }
+  "presets": ["env"],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["transform-class-properties"],
+    ["@babel/plugin-transform-runtime"]
+  ]
+}

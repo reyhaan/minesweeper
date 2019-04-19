@@ -7,11 +7,14 @@ import './style.scss'
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
   }
 
   handleCellClick() {
     console.log('something')
+  }
+
+  handleRightClick(event) {
+    event.preventDefault()
   }
 
   componentDidMount() {}
@@ -45,6 +48,7 @@ class Map extends React.Component {
           key={col}
           id={`${rowIndex}${col}`}
           onClick={() => this.handleCellClick()}
+          onContextMenu={() => this.handleRightClick(event)}
           className={'cell ' + cellClass}
         >
           {cell.adj != 0 && <div className="cell__value">{cell.adj}</div>}

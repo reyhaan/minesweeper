@@ -139,7 +139,20 @@ export default class AppStore {
     ],
   ]
 
+  @observable
+  game
+
   constructor() {}
+
+  @action
+  getGame() {
+    return this.game
+  }
+
+  @action
+  setGame(newGame) {
+    this.game = newGame
+  }
 
   @action
   getMapState() {

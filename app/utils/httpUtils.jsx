@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const host = '/api/v1'
+export const host = 'http://localhost:8000/api/v1'
 
 export const request = axios.create({
   baseURL: host,
