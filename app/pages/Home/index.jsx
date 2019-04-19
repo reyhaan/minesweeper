@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import Map from '../../components/Map'
+import { appStore } from '../../stores'
 import './style.scss'
 
 @observer
@@ -13,7 +14,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-container">
-        <Map />
+        <Map mapState={appStore.getMapState()} />
       </div>
     )
   }
