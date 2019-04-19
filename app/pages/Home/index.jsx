@@ -1,20 +1,20 @@
-
 import React from 'react'
-import './style.scss'
 import { observer } from 'mobx-react'
+import Map from '../../components/Map'
+import './style.scss'
 
 @observer
 class Home extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      
-    }
+    this.state = {}
   }
 
   render() {
     return (
-      <p>Home page</p>
+      <div className="home-container">
+        <Map />
+      </div>
     )
   }
 }
