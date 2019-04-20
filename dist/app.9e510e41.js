@@ -45881,8 +45881,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export const host = 'http://localhost:8000/api/v1'
-var host = 'http://138.197.139.181:8000/api/v1';
+var host = 'http://localhost:8000/api/v1'; // export const host = 'http://138.197.139.181:8000/api/v1'
+
 exports.host = host;
 
 var request = _axios.default.create({
