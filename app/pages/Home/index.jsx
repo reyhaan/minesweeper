@@ -14,7 +14,9 @@ class Home extends React.Component {
     // reactLocalStorage.setObject('game', {})
     var game = reactLocalStorage.getObject('game')
     if (Object.keys(game).length !== 0) {
+      var hasLost = reactLocalStorage.getObject('hasLost')
       appStore.setGame(game)
+      appStore.setGameHasLost(JSON.parse(hasLost))
     } else {
       var params = {
         name: 'random name',
@@ -29,11 +31,21 @@ class Home extends React.Component {
   }
 
   async handleCellClick(move) {
-    if (appStore.getGameLost()) return
+    if (appStore.getGameLost() || JSON.parse(reactLocalStorage.get('hasLost'))) {
+      return
+    }
 
     var newMapState = await makeMove(appStore.getGame(), move)
-    appStore.updateGameState(newMapState.new_map_state)
-    reactLocalStorage.setObject('game', appStore.getGame())
+
+    if (newMapState.hasLost) {
+      appStore.setGameHasLost(true)
+      appStore.updateGameState(newMapState.new_map_state)
+      reactLocalStorage.setObject('game', appStore.getGame())
+      reactLocalStorage.set('hasLost', true)
+    } else {
+      appStore.updateGameState(newMapState.new_map_state)
+      reactLocalStorage.setObject('game', appStore.getGame())
+    }
   }
 
   async handleNewMapClick() {
@@ -44,8 +56,9 @@ class Home extends React.Component {
       map_state: newMapState.new_map_state,
     }
     reactLocalStorage.setObject('game', params)
-    appStore.updateGameState(newMapState.new_map_state)
+    reactLocalStorage.set('hasLost', false)
     appStore.setGameHasLost(false)
+    appStore.updateGameState(newMapState.new_map_state)
   }
 
   render() {
@@ -58,7 +71,7 @@ class Home extends React.Component {
           onCellClick={move => this.handleCellClick(move)}
           onCellRightClick={move => this.handleCellClick(move)}
         />
-        {appStore.getGameLost() && <p className="result">Wow, you just killed a bro! Sad!</p>}
+        {appStore.hasLost && <p className="result">Wow, you just killed a bro! Sad!</p>}
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
           RESET BRO!
         </div>
