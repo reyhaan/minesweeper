@@ -64,7 +64,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-container">
-        <p className="title">Help a Bro crossing this mine field!</p>
+        <p className="title">Help a Bro cross this mine field !</p>
         <Map
           game={appStore.getGame()}
           mapState={appStore.mapState}
