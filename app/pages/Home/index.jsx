@@ -29,6 +29,8 @@ class Home extends React.Component {
   }
 
   async handleCellClick(move) {
+    if (appStore.getGameLost()) return
+
     var newMapState = await makeMove(appStore.getGame(), move)
     appStore.updateGameState(newMapState.new_map_state)
     reactLocalStorage.setObject('game', appStore.getGame())
@@ -43,19 +45,20 @@ class Home extends React.Component {
     }
     reactLocalStorage.setObject('game', params)
     appStore.updateGameState(newMapState.new_map_state)
+    appStore.setGameHasLost(false)
   }
 
   render() {
     return (
       <div className="home-container">
-        <p className="title">Save a Bro crossing this mine field!</p>
+        <p className="title">Help a Bro crossing this mine field!</p>
         <Map
           game={appStore.getGame()}
           mapState={appStore.mapState}
           onCellClick={move => this.handleCellClick(move)}
           onCellRightClick={move => this.handleCellClick(move)}
         />
-        <p className="result">Lost</p>
+        {appStore.getGameLost() && <p className="result">Wow, you just killed a bro! Sad!</p>}
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
           RESET BRO!
         </div>

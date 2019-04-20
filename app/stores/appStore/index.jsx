@@ -7,6 +7,17 @@ export default class AppStore {
   @observable name
   @observable uuid
   @observable mapState
+  @observable hasLost
+
+  @action
+  setGameHasLost(result) {
+    this.hasLost = result
+  }
+
+  @action
+  getGameLost() {
+    return this.hasLost
+  }
 
   @action
   getGame() {
