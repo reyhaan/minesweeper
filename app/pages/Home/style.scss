@@ -1,11 +1,29 @@
 .home-container {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  margin: 0 auto;
+
+  .title {
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+  }
+
+  .result {
+    position: relative;
+    top: 385px;
+    color: #e04e4e;
+    text-align: center;
+  }
+
   .btn {
     height: 50px;
     width: 100px;
     background-color: #ccc;
     color: #000;
     position: absolute;
-    top: 400px;
+    top: 450px;
   }
 
   &__get-new {

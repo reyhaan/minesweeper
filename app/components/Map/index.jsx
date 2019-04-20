@@ -60,7 +60,7 @@ class Map extends React.Component {
           onContextMenu={() => this.handleRightClick(event)}
           className={'cell ' + cellClass}
         >
-          {cell.adj != 0 && <div className="cell__value">{cell.adj}</div>}
+          {cell.adj != 0 && !cell.has_mine && <div className="cell__value">{cell.adj}</div>}
         </div>
       )
     })

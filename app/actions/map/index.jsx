@@ -20,12 +20,12 @@ export async function getMap(uuid) {
 }
 
 export async function makeMove(game, move) {
-  const response = await request.put('/game/move/', {
+  var params = {
     uuid: game.uuid,
     name: game.name,
-    map_state: game.map_state,
-    map_original: '[]',
+    map_state: JSON.stringify(game.map_state),
     move: move,
-  })
+  }
+  const response = await request.put('/game/move/', params)
   return response.data
 }

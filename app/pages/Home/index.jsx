@@ -10,19 +10,11 @@ import './style.scss'
 
 @observer
 class Home extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
   async componentDidMount() {
     reactLocalStorage.setObject('game', {})
     var game = reactLocalStorage.getObject('game')
     if (Object.keys(game).length !== 0) {
-      console.log(game.uuid)
-      // var game = await getMap(game.uuid)
       appStore.setGame(game)
-      appStore.setMapState(JSON.parse(game.map_state))
     } else {
       var params = {
         name: 'random name',
@@ -30,22 +22,17 @@ class Home extends React.Component {
         map_state: '[]',
       }
       var new_game = await createNewGame(params)
+
+      new_game['map_state'] = JSON.parse(new_game['map_state'])
+
       reactLocalStorage.setObject('game', new_game)
       appStore.setGame(new_game)
-      appStore.setMapState(JSON.parse(new_game.map_state))
     }
   }
 
   async handleCellClick(move) {
     var newMapState = await makeMove(appStore.getGame(), move)
-    appStore.setMapState(newMapState.new_map_state)
-    console.log(newMapState)
-  }
-
-  async handleCellRightClick() {
-    var newMapState = await makeMove(appStore.getGame(), move)
-    appStore.setMapState(newMapState.new_map_state)
-    console.log(newMapState)
+    appStore.updateGameState(newMapState.new_map_state)
   }
 
   async handleNewMapClick() {
@@ -53,22 +40,23 @@ class Home extends React.Component {
     var params = {
       name: newMapState.user.name,
       uuid: newMapState.user.uuid,
-      map_state: JSON.stringify(newMapState.new_map_state),
+      map_state: newMapState.new_map_state,
     }
     reactLocalStorage.setObject('game', params)
-    appStore.setMapState(newMapState.new_map_state)
-    console.log(newMapState)
+    appStore.updateGameState(newMapState.new_map_state)
   }
 
   render() {
     return (
       <div className="home-container">
+        <p className="title">Save a Bro crossing this mine field!</p>
         <Map
           game={appStore.getGame()}
           mapState={appStore.mapState}
           onCellClick={move => this.handleCellClick(move)}
-          onCellRightClick={move => this.handleCellRightClick(move)}
+          onCellRightClick={move => this.handleCellClick(move)}
         />
+        <p className="result">Lost</p>
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
           GET NEW MAP
         </div>

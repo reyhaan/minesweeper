@@ -3,16 +3,10 @@ import { configure, observable, action } from 'mobx'
 configure({ enforceActions: 'always' })
 
 export default class AppStore {
-  @observable
-  mapState2 = [[{ adj: 0, state: 0 }]]
-
-  @observable
-  game
-
-  @observable
-  mapState
-
-  constructor() {}
+  @observable game
+  @observable name
+  @observable uuid
+  @observable mapState
 
   @action
   getGame() {
@@ -20,18 +14,37 @@ export default class AppStore {
   }
 
   @action
-  getUuid() {
-    return this.game.uuid
-  }
-
-  @action
-  getUsername() {
-    return this.game.name
-  }
-
-  @action
   setGame(newGame) {
     this.game = newGame
+    this.setName(newGame.name)
+    this.setUuid(newGame.uuid)
+    this.setMapState(newGame.map_state)
+  }
+
+  @action
+  getUuid() {
+    return this.uuid
+  }
+
+  @action
+  setUuid(uuid) {
+    this.uuid = uuid
+  }
+
+  @action
+  getName() {
+    return this.name
+  }
+
+  @action
+  setName(name) {
+    this.name = name
+  }
+
+  @action
+  updateGameState(newState) {
+    this.game.mapState = newState
+    this.mapState = newState
   }
 
   @action
