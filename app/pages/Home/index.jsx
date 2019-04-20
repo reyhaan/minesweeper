@@ -11,7 +11,7 @@ import './style.scss'
 @observer
 class Home extends React.Component {
   async componentDidMount() {
-    reactLocalStorage.setObject('game', {})
+    // reactLocalStorage.setObject('game', {})
     var game = reactLocalStorage.getObject('game')
     if (Object.keys(game).length !== 0) {
       appStore.setGame(game)
@@ -22,9 +22,7 @@ class Home extends React.Component {
         map_state: '[]',
       }
       var new_game = await createNewGame(params)
-
       new_game['map_state'] = JSON.parse(new_game['map_state'])
-
       reactLocalStorage.setObject('game', new_game)
       appStore.setGame(new_game)
     }
@@ -33,6 +31,7 @@ class Home extends React.Component {
   async handleCellClick(move) {
     var newMapState = await makeMove(appStore.getGame(), move)
     appStore.updateGameState(newMapState.new_map_state)
+    reactLocalStorage.setObject('game', appStore.getGame())
   }
 
   async handleNewMapClick() {

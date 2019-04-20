@@ -43,7 +43,7 @@ export default class AppStore {
 
   @action
   updateGameState(newState) {
-    this.game.mapState = newState
+    this.game.map_state = newState
     this.mapState = newState
   }
 
