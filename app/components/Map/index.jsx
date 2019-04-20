@@ -26,8 +26,6 @@ class Map extends React.Component {
     this.props.onCellClick(this.makeMove('flag', event.target.id))
   }
 
-  componentDidMount() {}
-
   createMap() {
     var rows = this.props.mapState.map((row, rowIndex) => {
       return (

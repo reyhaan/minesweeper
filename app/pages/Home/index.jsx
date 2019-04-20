@@ -57,7 +57,7 @@ class Home extends React.Component {
         />
         <p className="result">Lost</p>
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
-          GET NEW MAP
+          RESET BRO!
         </div>
       </div>
     )
