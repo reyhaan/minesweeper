@@ -46871,7 +46871,9 @@ function (_React$Component) {
         className: "home-container"
       }, _react.default.createElement("p", {
         className: "title"
-      }, "Help a Bro cross this mine field !"), _react.default.createElement(_Map.default, {
+      }, "Mine-Bro"), _react.default.createElement("p", {
+        className: "sub-title"
+      }, "Help a bro cross this mine field"), _react.default.createElement(_Map.default, {
         game: _stores.appStore.getGame(),
         mapState: _stores.appStore.mapState,
         onCellClick: function onCellClick(move) {
@@ -46887,7 +46889,7 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this.handleNewMapClick();
         }
-      }, "RESET BRO!"));
+      }, "RESET"));
     }
   }]);
 

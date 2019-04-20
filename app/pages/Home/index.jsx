@@ -64,7 +64,8 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-container">
-        <p className="title">Help a Bro cross this mine field !</p>
+        <p className="title">Mine-Bro</p>
+        <p className="sub-title">Help a bro cross this mine field</p>
         <Map
           game={appStore.getGame()}
           mapState={appStore.mapState}
@@ -73,7 +74,7 @@ class Home extends React.Component {
         />
         {appStore.hasLost && <p className="result">Wow, you just killed a bro! Sad!</p>}
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
-          RESET BRO!
+          RESET
         </div>
       </div>
     )
