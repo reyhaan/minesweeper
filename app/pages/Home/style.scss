@@ -1,0 +1,13 @@
+.home-container {
+  .btn {
+    height: 50px;
+    width: 100px;
+    background-color: #ccc;
+    color: #000;
+    position: absolute;
+    top: 400px;
+  }
+
+  &__get-new {
+  }
+}

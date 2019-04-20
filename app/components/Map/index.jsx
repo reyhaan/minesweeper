@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import PropTypes from 'prop-types'
+import { makeMove } from '../../actions/map'
 import './style.scss'
 
 @observer
@@ -9,12 +10,20 @@ class Map extends React.Component {
     super(props)
   }
 
-  handleCellClick() {
-    console.log('something')
+  makeMove(intent, cell) {
+    return {
+      intent: intent,
+      cell: cell,
+    }
+  }
+
+  handleCellClick(event) {
+    this.props.onCellClick(this.makeMove('reveal', event.target.id))
   }
 
   handleRightClick(event) {
     event.preventDefault()
+    this.props.onCellClick(this.makeMove('flag', event.target.id))
   }
 
   componentDidMount() {}
@@ -46,8 +55,8 @@ class Map extends React.Component {
       return (
         <div
           key={col}
-          id={`${rowIndex}${col}`}
-          onClick={() => this.handleCellClick()}
+          id={`${rowIndex}-${col}`}
+          onClick={() => this.handleCellClick(event)}
           onContextMenu={() => this.handleRightClick(event)}
           className={'cell ' + cellClass}
         >
@@ -68,12 +77,16 @@ Map.propTypes = {
   row: PropTypes.number,
   col: PropTypes.number,
   mapState: PropTypes.any,
+  onCellClick: PropTypes.func,
+  onCellRightClick: PropTypes.func,
 }
 
 Map.defaultProps = {
   row: 15,
   col: 20,
   mapState: [],
+  onCellClick: () => {},
+  onCellRightClick: () => {},
 }
 
 export default Map

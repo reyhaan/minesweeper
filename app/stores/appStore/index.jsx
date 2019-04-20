@@ -4,149 +4,29 @@ configure({ enforceActions: 'always' })
 
 export default class AppStore {
   @observable
-  mapState = [
-    [
-      { adj: 0, state: 1 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 4, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 3 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-    [
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-      { adj: 0, state: 0 },
-    ],
-  ]
+  mapState2 = [[{ adj: 0, state: 0 }]]
 
   @observable
   game
+
+  @observable
+  mapState
 
   constructor() {}
 
   @action
   getGame() {
     return this.game
+  }
+
+  @action
+  getUuid() {
+    return this.game.uuid
+  }
+
+  @action
+  getUsername() {
+    return this.game.name
   }
 
   @action
