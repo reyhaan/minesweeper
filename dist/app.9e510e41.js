@@ -44433,7 +44433,390 @@ if ((typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "undefined" ? "undefined" : _typeo
 
   __MOBX_DEVTOOLS_GLOBAL_HOOK__.injectMobxReact(mobxReact, mobx);
 }
-},{"mobx":"node_modules/mobx/lib/mobx.module.js","react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+},{"mobx":"node_modules/mobx/lib/mobx.module.js","react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"app/components/Map/style.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"./../../assets/mine.png":[["mine.5dc3d5c9.png","app/assets/mine.png"],"app/assets/mine.png"],"./../../assets/flag.png":[["flag.92a72192.png","app/assets/flag.png"],"app/assets/flag.png"],"_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"app/components/Map/index.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _mobxReact = require("mobx-react");
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+require("./style.scss");
+
+var _class;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Map = (0, _mobxReact.observer)(_class =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Map, _React$Component);
+
+  function Map(props) {
+    _classCallCheck(this, Map);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Map).call(this, props));
+  }
+
+  _createClass(Map, [{
+    key: "makeMove",
+    value: function makeMove(intent, cell) {
+      return {
+        intent: intent,
+        cell: cell
+      };
+    }
+  }, {
+    key: "handleCellClick",
+    value: function handleCellClick(event) {
+      var classes = event.target.classList.value;
+
+      if (classes.indexOf('cell__revealed') !== -1 || classes.indexOf('cell__value') !== -1 || classes.indexOf('cell__has-mine') !== -1) {
+        return;
+      }
+
+      this.props.onCellClick(this.makeMove('reveal', event.target.id));
+    }
+  }, {
+    key: "handleRightClick",
+    value: function handleRightClick(event) {
+      event.preventDefault();
+      this.props.onCellClick(this.makeMove('flag', event.target.id));
+    }
+  }, {
+    key: "createMap",
+    value: function createMap() {
+      var _this = this;
+
+      var rows = this.props.mapState.map(function (row, rowIndex) {
+        return _react.default.createElement("div", {
+          className: "row",
+          key: rowIndex
+        }, _this.createCells(rowIndex, row));
+      });
+      return rows;
+    }
+  }, {
+    key: "createCells",
+    value: function createCells(rowIndex, row) {
+      var _this2 = this;
+
+      var cols = row.map(function (cell, col) {
+        var cellClass = 'cell__default';
+
+        if (cell.state === 1) {
+          cellClass = 'cell__revealed';
+        } else if (cell.state === 2) {
+          cellClass = 'cell__has-mine';
+        } else if (cell.state === 3) {
+          cellClass = 'cell__flagged';
+        }
+
+        return _react.default.createElement("div", {
+          key: col,
+          id: "".concat(rowIndex, "-").concat(col),
+          onClick: function onClick() {
+            return _this2.handleCellClick(event);
+          },
+          onContextMenu: function onContextMenu() {
+            return _this2.handleRightClick(event);
+          },
+          className: 'cell ' + cellClass
+        }, cell.adj != 0 && cell.state !== 2 && _react.default.createElement("div", {
+          className: "cell__value"
+        }, cell.adj));
+      });
+      return cols;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "map-container"
+      }, this.createMap());
+    }
+  }]);
+
+  return Map;
+}(_react.default.Component)) || _class;
+
+Map.propTypes = {
+  row: _propTypes.default.number,
+  col: _propTypes.default.number,
+  mapState: _propTypes.default.any,
+  onCellClick: _propTypes.default.func,
+  onCellRightClick: _propTypes.default.func
+};
+Map.defaultProps = {
+  row: 15,
+  col: 20,
+  mapState: [],
+  onCellClick: function onCellClick() {},
+  onCellRightClick: function onCellRightClick() {}
+};
+var _default = Map;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","mobx-react":"node_modules/mobx-react/index.module.js","prop-types":"node_modules/prop-types/index.js","./style.scss":"app/components/Map/style.scss"}],"app/stores/appStore/index.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _mobx = require("mobx");
+
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
+
+function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
+
+(0, _mobx.configure)({
+  enforceActions: 'always'
+});
+var AppStore = (_class =
+/*#__PURE__*/
+function () {
+  function AppStore() {
+    _classCallCheck(this, AppStore);
+
+    _initializerDefineProperty(this, "game", _descriptor, this);
+
+    _initializerDefineProperty(this, "name", _descriptor2, this);
+
+    _initializerDefineProperty(this, "uuid", _descriptor3, this);
+
+    _initializerDefineProperty(this, "mapState", _descriptor4, this);
+
+    _initializerDefineProperty(this, "hasLost", _descriptor5, this);
+
+    _initializerDefineProperty(this, "hasWon", _descriptor6, this);
+  }
+
+  _createClass(AppStore, [{
+    key: "setGameHasLost",
+    value: function setGameHasLost(result) {
+      this.hasLost = result;
+    }
+  }, {
+    key: "getGameLost",
+    value: function getGameLost() {
+      return this.hasLost;
+    }
+  }, {
+    key: "setGameHasWon",
+    value: function setGameHasWon(result) {
+      this.hasWon = result;
+    }
+  }, {
+    key: "getGameWon",
+    value: function getGameWon() {
+      return this.hasWon;
+    }
+  }, {
+    key: "getGame",
+    value: function getGame() {
+      return this.game;
+    }
+  }, {
+    key: "setGame",
+    value: function setGame(newGame) {
+      this.game = newGame;
+      this.setName(newGame.name);
+      this.setUuid(newGame.uuid);
+      this.setMapState(newGame.map_state);
+    }
+  }, {
+    key: "getUuid",
+    value: function getUuid() {
+      return this.uuid;
+    }
+  }, {
+    key: "setUuid",
+    value: function setUuid(uuid) {
+      this.uuid = uuid;
+    }
+  }, {
+    key: "getName",
+    value: function getName() {
+      return this.name;
+    }
+  }, {
+    key: "setName",
+    value: function setName(name) {
+      this.name = name;
+    }
+  }, {
+    key: "updateGameState",
+    value: function updateGameState(newState) {
+      this.game.map_state = newState;
+      this.mapState = newState;
+    }
+  }, {
+    key: "getMapState",
+    value: function getMapState() {
+      return this.mapState;
+    }
+  }, {
+    key: "setMapState",
+    value: function setMapState(newState) {
+      this.mapState = newState;
+    }
+  }]);
+
+  return AppStore;
+}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "game", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "name", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "uuid", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "mapState", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "hasLost", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "hasWon", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _applyDecoratedDescriptor(_class.prototype, "setGameHasLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGameHasWon", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasWon"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameWon", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameWon"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "updateGameState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateGameState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getMapState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setMapState"), _class.prototype)), _class);
+exports.default = AppStore;
+},{"mobx":"node_modules/mobx/lib/mobx.module.js"}],"app/stores/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.appStore = void 0;
+
+var _appStore = _interopRequireDefault(require("./appStore"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var appStore = new _appStore.default();
+exports.appStore = appStore;
+},{"./appStore":"app/stores/appStore/index.jsx"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -45881,8 +46264,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export const host = 'http://localhost:8000/api/v1'
-var host = 'http://138.197.139.181:8000/api/v1';
+var host = 'http://localhost:8000/api/v1'; // export const host = 'http://138.197.139.181:8000/api/v1'
+
 exports.host = host;
 
 var request = _axios.default.create({
@@ -46072,386 +46455,7 @@ function _makeMove() {
   }));
   return _makeMove.apply(this, arguments);
 }
-},{"../../utils/httpUtils":"app/utils/httpUtils.jsx"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"app/components/Map/style.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./../../assets/mine.png":[["mine.5dc3d5c9.png","app/assets/mine.png"],"app/assets/mine.png"],"./../../assets/flag.png":[["flag.92a72192.png","app/assets/flag.png"],"app/assets/flag.png"],"_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"app/components/Map/index.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _mobxReact = require("mobx-react");
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _map = require("../../actions/map");
-
-require("./style.scss");
-
-var _class;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Map = (0, _mobxReact.observer)(_class =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Map, _React$Component);
-
-  function Map(props) {
-    _classCallCheck(this, Map);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Map).call(this, props));
-  }
-
-  _createClass(Map, [{
-    key: "makeMove",
-    value: function makeMove(intent, cell) {
-      return {
-        intent: intent,
-        cell: cell
-      };
-    }
-  }, {
-    key: "handleCellClick",
-    value: function handleCellClick(event) {
-      this.props.onCellClick(this.makeMove('reveal', event.target.id));
-    }
-  }, {
-    key: "handleRightClick",
-    value: function handleRightClick(event) {
-      event.preventDefault();
-      this.props.onCellClick(this.makeMove('flag', event.target.id));
-    }
-  }, {
-    key: "createMap",
-    value: function createMap() {
-      var _this = this;
-
-      var rows = this.props.mapState.map(function (row, rowIndex) {
-        return _react.default.createElement("div", {
-          className: "row",
-          key: rowIndex
-        }, _this.createCells(rowIndex, row));
-      });
-      return rows;
-    }
-  }, {
-    key: "createCells",
-    value: function createCells(rowIndex, row) {
-      var _this2 = this;
-
-      var cols = row.map(function (cell, col) {
-        var cellClass = 'cell__default';
-
-        if (cell.state === 1) {
-          cellClass = 'cell__revealed';
-        } else if (cell.state === 2) {
-          cellClass = 'cell__has-mine';
-        } else if (cell.state === 3) {
-          cellClass = 'cell__flagged';
-        }
-
-        return _react.default.createElement("div", {
-          key: col,
-          id: "".concat(rowIndex, "-").concat(col),
-          onClick: function onClick() {
-            return _this2.handleCellClick(event);
-          },
-          onContextMenu: function onContextMenu() {
-            return _this2.handleRightClick(event);
-          },
-          className: 'cell ' + cellClass
-        }, cell.adj != 0 && cell.state !== 2 && _react.default.createElement("div", {
-          className: "cell__value"
-        }, cell.adj));
-      });
-      return cols;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        className: "map-container"
-      }, this.createMap());
-    }
-  }]);
-
-  return Map;
-}(_react.default.Component)) || _class;
-
-Map.propTypes = {
-  row: _propTypes.default.number,
-  col: _propTypes.default.number,
-  mapState: _propTypes.default.any,
-  onCellClick: _propTypes.default.func,
-  onCellRightClick: _propTypes.default.func
-};
-Map.defaultProps = {
-  row: 15,
-  col: 20,
-  mapState: [],
-  onCellClick: function onCellClick() {},
-  onCellRightClick: function onCellRightClick() {}
-};
-var _default = Map;
-exports.default = _default;
-},{"react":"node_modules/react/index.js","mobx-react":"node_modules/mobx-react/index.module.js","prop-types":"node_modules/prop-types/index.js","../../actions/map":"app/actions/map/index.jsx","./style.scss":"app/components/Map/style.scss"}],"app/stores/appStore/index.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _mobx = require("mobx");
-
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
-
-function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
-
-(0, _mobx.configure)({
-  enforceActions: 'always'
-});
-var AppStore = (_class =
-/*#__PURE__*/
-function () {
-  function AppStore() {
-    _classCallCheck(this, AppStore);
-
-    _initializerDefineProperty(this, "game", _descriptor, this);
-
-    _initializerDefineProperty(this, "name", _descriptor2, this);
-
-    _initializerDefineProperty(this, "uuid", _descriptor3, this);
-
-    _initializerDefineProperty(this, "mapState", _descriptor4, this);
-
-    _initializerDefineProperty(this, "hasLost", _descriptor5, this);
-
-    _initializerDefineProperty(this, "hasWon", _descriptor6, this);
-  }
-
-  _createClass(AppStore, [{
-    key: "setGameHasLost",
-    value: function setGameHasLost(result) {
-      this.hasLost = result;
-    }
-  }, {
-    key: "getGameLost",
-    value: function getGameLost() {
-      return this.hasLost;
-    }
-  }, {
-    key: "setGameHasWon",
-    value: function setGameHasWon(result) {
-      this.hasWon = result;
-    }
-  }, {
-    key: "getGameWon",
-    value: function getGameWon() {
-      return this.hasWon;
-    }
-  }, {
-    key: "getGame",
-    value: function getGame() {
-      return this.game;
-    }
-  }, {
-    key: "setGame",
-    value: function setGame(newGame) {
-      this.game = newGame;
-      this.setName(newGame.name);
-      this.setUuid(newGame.uuid);
-      this.setMapState(newGame.map_state);
-    }
-  }, {
-    key: "getUuid",
-    value: function getUuid() {
-      return this.uuid;
-    }
-  }, {
-    key: "setUuid",
-    value: function setUuid(uuid) {
-      this.uuid = uuid;
-    }
-  }, {
-    key: "getName",
-    value: function getName() {
-      return this.name;
-    }
-  }, {
-    key: "setName",
-    value: function setName(name) {
-      this.name = name;
-    }
-  }, {
-    key: "updateGameState",
-    value: function updateGameState(newState) {
-      this.game.map_state = newState;
-      this.mapState = newState;
-    }
-  }, {
-    key: "getMapState",
-    value: function getMapState() {
-      return this.mapState;
-    }
-  }, {
-    key: "setMapState",
-    value: function setMapState(newState) {
-      this.mapState = newState;
-    }
-  }]);
-
-  return AppStore;
-}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "game", [_mobx.observable], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "name", [_mobx.observable], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "uuid", [_mobx.observable], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "mapState", [_mobx.observable], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "hasLost", [_mobx.observable], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "hasWon", [_mobx.observable], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _applyDecoratedDescriptor(_class.prototype, "setGameHasLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGameHasWon", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasWon"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameWon", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameWon"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "updateGameState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateGameState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getMapState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setMapState"), _class.prototype)), _class);
-exports.default = AppStore;
-},{"mobx":"node_modules/mobx/lib/mobx.module.js"}],"app/stores/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.appStore = void 0;
-
-var _appStore = _interopRequireDefault(require("./appStore"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var appStore = new _appStore.default();
-exports.appStore = appStore;
-},{"./appStore":"app/stores/appStore/index.jsx"}],"node_modules/reactjs-localstorage/react-localstorage.js":[function(require,module,exports) {
+},{"../../utils/httpUtils":"app/utils/httpUtils.jsx"}],"node_modules/reactjs-localstorage/react-localstorage.js":[function(require,module,exports) {
 exports.reactLocalStorage = {
     set: function(key, value) {
         localStorage[key] = value;
@@ -46809,7 +46813,7 @@ function (_React$Component) {
 
               case 9:
                 new_game = _context.sent;
-                this.setNewGame(new_game); // local game is synced with server
+                this.setNewGame(new_game); // local game is synced with server, we can update the states for the game
 
                 _context.next = 16;
                 break;

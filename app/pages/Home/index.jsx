@@ -35,7 +35,7 @@ class Home extends React.Component {
         var new_game = await createNewGame(params)
         this.setNewGame(new_game)
 
-        // local game is synced with server
+        // local game is synced with server, we can update the states for the game
       } else {
         appStore.setGame(game)
         appStore.setGameHasLost(JSON.parse(reactLocalStorage.get('hasLost')))

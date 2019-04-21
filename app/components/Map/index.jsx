@@ -1,7 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import PropTypes from 'prop-types'
-import { makeMove } from '../../actions/map'
 import './style.scss'
 
 @observer
@@ -18,6 +17,14 @@ class Map extends React.Component {
   }
 
   handleCellClick(event) {
+    var classes = event.target.classList.value
+    if (
+      classes.indexOf('cell__revealed') !== -1 ||
+      classes.indexOf('cell__value') !== -1 ||
+      classes.indexOf('cell__has-mine') !== -1
+    ) {
+      return
+    }
     this.props.onCellClick(this.makeMove('reveal', event.target.id))
   }
 
