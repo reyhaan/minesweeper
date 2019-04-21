@@ -44576,8 +44576,7 @@ function (_React$Component) {
   }, {
     key: "handleRightClick",
     value: function handleRightClick(event) {
-      event.preventDefault();
-      this.props.onCellClick(this.makeMove('flag', event.target.id));
+      event.preventDefault(); // this.props.onCellClick(this.makeMove('flag', event.target.id))
     }
   }, {
     key: "createMap",

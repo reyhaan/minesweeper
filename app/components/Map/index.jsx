@@ -30,7 +30,7 @@ class Map extends React.Component {
 
   handleRightClick(event) {
     event.preventDefault()
-    this.props.onCellClick(this.makeMove('flag', event.target.id))
+    // this.props.onCellClick(this.makeMove('flag', event.target.id))
   }
 
   createMap() {
