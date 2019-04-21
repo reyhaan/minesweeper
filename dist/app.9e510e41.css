@@ -1,82 +1,97 @@
 .map-container {
   position: absolute;
-  padding: 10px; }
-  .map-container .row {
-    position: relative; }
-  .map-container .cell {
-    float: left;
-    height: 30px;
-    width: 30px;
-    margin: 2px 2px 0 0;
-    padding: 2px;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; }
-    .map-container .cell .cell__value {
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700; }
-    .map-container .cell:hover {
-      opacity: 0.7; }
-    .map-container .cell__default {
-      background-image: linear-gradient(#284fa6, #3765cb); }
-    .map-container .cell__revealed {
-      background-color: #3c3e44; }
-    .map-container .cell__has-mine {
-      background-image: url("/mine.5dc3d5c9.png");
-      background-color: #000;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 40%; }
-    .map-container .cell__flagged {
-      background-image: url("/flag.92a72192.png");
-      background-color: #000;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 45%; }
-
+  padding: 10px;
+}
+.map-container .row {
+  position: relative;
+}
+.map-container .cell {
+  float: left;
+  height: 30px;
+  width: 30px;
+  margin: 2px 2px 0 0;
+  padding: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-container .cell .cell__value {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+.map-container .cell:hover {
+  opacity: 0.7;
+}
+.map-container .cell__default {
+  background-image: linear-gradient(#284fa6, #3765cb);
+}
+.map-container .cell__revealed {
+  background-color: #3c3e44;
+}
+.map-container .cell__has-mine {
+  background-image: url("/mine.5dc3d5c9.png");
+  background-color: #000;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+}
+.map-container .cell__flagged {
+  background-image: url("/flag.92a72192.png");
+  background-color: #000;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 45%;
+}
 .home-container {
   position: relative;
   width: 380px;
   height: 380px;
-  margin: 0 auto; }
-  .home-container .title {
-    color: #fff;
-    text-align: center;
-    line-height: 50px; }
-  .home-container .sub-title {
-    color: #aaaaaa;
-    text-align: center;
-    line-height: 0px;
-    font-size: 12px;
-    margin-bottom: 20px; }
-  .home-container .result {
-    position: relative;
-    font-size: 14px;
-    top: 395px;
-    text-align: center; }
-    .home-container .result__lost {
-      color: #e04e4e; }
-    .home-container .result__won {
-      color: #1bab4d; }
-  .home-container .btn {
-    width: 100px;
-    background-color: #1bab4d;
-    color: #fff;
-    position: relative;
-    top: 425px;
-    font-size: 11px;
-    font-weight: 700;
-    margin: 0 auto;
-    text-align: center;
-    padding: 10px;
-    border-radius: 20px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    text-shadow: 1px 1px 1px #00000078; }
-
+  margin: 0 auto;
+}
+.home-container .title {
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+}
+.home-container .sub-title {
+  color: #aaaaaa;
+  text-align: center;
+  line-height: 0px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+.home-container .result {
+  position: relative;
+  font-size: 14px;
+  top: 395px;
+  text-align: center;
+}
+.home-container .result__lost {
+  color: #e04e4e;
+}
+.home-container .result__won {
+  color: #1bab4d;
+}
+.home-container .btn {
+  width: 100px;
+  background-color: #0e9a39;
+  color: #fff;
+  position: relative;
+  top: 425px;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 #app {
   position: absolute;
   height: 100%;
@@ -84,15 +99,17 @@
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0; }
+  right: 0;
+}
 
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Nunito Sans', Helvetica, sans-serif; }
+  font-family: "Nunito Sans", Helvetica, sans-serif;
+}
 
 body {
-  background-color: #22252b; }
-
+  background-color: #22252b;
+}
 
 /*# sourceMappingURL=/app.9e510e41.css.map */

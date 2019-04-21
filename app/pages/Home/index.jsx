@@ -44,19 +44,15 @@ class Home extends React.Component {
 
     var newMapState = await makeMove(appStore.getGame(), move)
 
+    appStore.updateGameState(newMapState.new_map_state)
+    reactLocalStorage.setObject('game', appStore.getGame())
+
     if (newMapState.hasLost) {
       appStore.setGameHasLost(true)
-      appStore.updateGameState(newMapState.new_map_state)
-      reactLocalStorage.setObject('game', appStore.getGame())
       reactLocalStorage.set('hasLost', true)
     } else if (newMapState.hasWon) {
       appStore.setGameHasWon(true)
-      appStore.updateGameState(newMapState.new_map_state)
-      reactLocalStorage.setObject('game', appStore.getGame())
       reactLocalStorage.set('hasWon', true)
-    } else {
-      appStore.updateGameState(newMapState.new_map_state)
-      reactLocalStorage.setObject('game', appStore.getGame())
     }
   }
 
@@ -86,9 +82,7 @@ class Home extends React.Component {
           onCellClick={move => this.handleCellClick(move)}
           onCellRightClick={move => this.handleCellClick(move)}
         />
-        {appStore.hasLost && (
-          <p className="result result__lost">Wow, you just killed a bro! Sad!</p>
-        )}
+        {appStore.hasLost && <p className="result result__lost">Woah! You just killed a bro!</p>}
         {appStore.hasWon && <p className="result result__won">Congrats! You saved a bro, bro!</p>}
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
           RESET

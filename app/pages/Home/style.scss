@@ -35,18 +35,19 @@
 
   .btn {
     width: 100px;
-    background-color: #1bab4d;
+    background-color: #0e9a39;
     color: #fff;
     position: relative;
     top: 425px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     margin: 0 auto;
     text-align: center;
     padding: 10px;
     border-radius: 20px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     cursor: pointer;
-    text-shadow: 1px 1px 1px #00000078;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
