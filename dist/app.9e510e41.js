@@ -44576,7 +44576,8 @@ function (_React$Component) {
   }, {
     key: "handleRightClick",
     value: function handleRightClick(event) {
-      event.preventDefault(); // this.props.onCellClick(this.makeMove('flag', event.target.id))
+      event.preventDefault();
+      this.props.onCellClick(this.makeMove('flag', event.target.id));
     }
   }, {
     key: "createMap",
@@ -46263,8 +46264,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export const host = 'http://localhost:8000/api/v1'
-var host = 'http://138.197.139.181:8000/api/v1';
+var host = 'http://localhost:8000/api/v1'; // export const host = 'http://138.197.139.181:8000/api/v1'
+
 exports.host = host;
 
 var request = _axios.default.create({
@@ -46774,12 +46775,17 @@ function (_React$Component) {
       _stores.appStore.setGame(new_game);
     }
   }, {
+    key: "setGameHash",
+    value: function setGameHash(uuid) {
+      window.location.hash = uuid;
+    }
+  }, {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var params, savedGame, game, new_game;
+        var params, savedGame, uuid, game, new_game;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -46790,53 +46796,59 @@ function (_React$Component) {
                   map_state: '[]'
                 };
                 savedGame = _reactjsLocalstorage.reactLocalStorage.getObject('game');
+                uuid = window.location.hash.split('');
+                uuid = uuid.splice(1, uuid.length).join('');
 
                 if (!(Object.keys(savedGame).length !== 0)) {
-                  _context.next = 18;
+                  _context.next = 22;
                   break;
                 }
 
-                _context.next = 5;
-                return (0, _map.getMap)(savedGame.uuid);
+                _context.next = 7;
+                return (0, _map.getMap)(uuid || savedGame.uuid);
 
-              case 5:
+              case 7:
                 game = _context.sent;
 
                 if (!(game.status === 404)) {
-                  _context.next = 13;
+                  _context.next = 16;
                   break;
                 }
 
-                _context.next = 9;
+                _context.next = 11;
                 return (0, _map.createNewGame)(params);
 
-              case 9:
+              case 11:
                 new_game = _context.sent;
-                this.setNewGame(new_game); // local game is synced with server, we can update the states for the game
+                this.setNewGame(new_game);
+                this.setGameHash(new_game.uuid); // local game is synced with server, we can update the states for the game
 
-                _context.next = 16;
+                _context.next = 20;
                 break;
 
-              case 13:
+              case 16:
                 _stores.appStore.setGame(game);
 
                 _stores.appStore.setGameHasLost(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasLost')));
 
                 _stores.appStore.setGameHasWon(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasWon')));
 
-              case 16:
-                _context.next = 22;
-                break;
-
-              case 18:
-                _context.next = 20;
-                return (0, _map.createNewGame)(params);
+                this.setGameHash(game.uuid);
 
               case 20:
-                new_game = _context.sent;
-                this.setNewGame(new_game);
+                _context.next = 27;
+                break;
 
               case 22:
+                _context.next = 24;
+                return (0, _map.createNewGame)(params);
+
+              case 24:
+                new_game = _context.sent;
+                this.setNewGame(new_game);
+                this.setGameHash(new_game.uuid);
+
+              case 27:
               case "end":
                 return _context.stop();
             }

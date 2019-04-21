@@ -18,6 +18,10 @@ class Home extends React.Component {
     appStore.setGame(new_game)
   }
 
+  setGameHash(uuid) {
+    window.location.hash = uuid
+  }
+
   async componentDidMount() {
     var params = {
       name: 'random name',
@@ -26,24 +30,29 @@ class Home extends React.Component {
     }
     var savedGame = reactLocalStorage.getObject('game')
 
+    var uuid = window.location.hash.split('')
+    uuid = uuid.splice(1, uuid.length).join('')
+
     if (Object.keys(savedGame).length !== 0) {
       // find if local session is present at server
-      var game = await getMap(savedGame.uuid)
+      var game = await getMap(uuid || savedGame.uuid)
 
       // local game is not in sync with server
       if (game.status === 404) {
         var new_game = await createNewGame(params)
         this.setNewGame(new_game)
-
+        this.setGameHash(new_game.uuid)
         // local game is synced with server, we can update the states for the game
       } else {
         appStore.setGame(game)
         appStore.setGameHasLost(JSON.parse(reactLocalStorage.get('hasLost')))
         appStore.setGameHasWon(JSON.parse(reactLocalStorage.get('hasWon')))
+        this.setGameHash(game.uuid)
       }
     } else {
       var new_game = await createNewGame(params)
       this.setNewGame(new_game)
+      this.setGameHash(new_game.uuid)
     }
   }
 
