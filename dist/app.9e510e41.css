@@ -56,8 +56,11 @@
     position: relative;
     font-size: 14px;
     top: 395px;
-    color: #e04e4e;
     text-align: center; }
+    .home-container .result__lost {
+      color: #e04e4e; }
+    .home-container .result__won {
+      color: #1bab4d; }
   .home-container .btn {
     width: 100px;
     background-color: #1bab4d;
@@ -70,6 +73,7 @@
     text-align: center;
     padding: 10px;
     border-radius: 20px;
+    letter-spacing: 2px;
     cursor: pointer;
     text-shadow: 1px 1px 1px #00000078; }
 

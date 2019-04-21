@@ -15,8 +15,10 @@ class Home extends React.Component {
     var game = reactLocalStorage.getObject('game')
     if (Object.keys(game).length !== 0) {
       var hasLost = reactLocalStorage.getObject('hasLost')
+      var hasWon = reactLocalStorage.getObject('hasWon')
       appStore.setGame(game)
       appStore.setGameHasLost(JSON.parse(hasLost))
+      appStore.setGameHasWon(JSON.parse(hasWon))
     } else {
       var params = {
         name: 'random name',
@@ -31,7 +33,12 @@ class Home extends React.Component {
   }
 
   async handleCellClick(move) {
-    if (appStore.getGameLost() || JSON.parse(reactLocalStorage.get('hasLost'))) {
+    if (
+      appStore.getGameWon() ||
+      appStore.getGameLost() ||
+      JSON.parse(reactLocalStorage.get('hasLost')) ||
+      JSON.parse(reactLocalStorage.get('hasWon'))
+    ) {
       return
     }
 
@@ -42,6 +49,11 @@ class Home extends React.Component {
       appStore.updateGameState(newMapState.new_map_state)
       reactLocalStorage.setObject('game', appStore.getGame())
       reactLocalStorage.set('hasLost', true)
+    } else if (newMapState.hasWon) {
+      appStore.setGameHasWon(true)
+      appStore.updateGameState(newMapState.new_map_state)
+      reactLocalStorage.setObject('game', appStore.getGame())
+      reactLocalStorage.set('hasWon', true)
     } else {
       appStore.updateGameState(newMapState.new_map_state)
       reactLocalStorage.setObject('game', appStore.getGame())
@@ -57,7 +69,9 @@ class Home extends React.Component {
     }
     reactLocalStorage.setObject('game', params)
     reactLocalStorage.set('hasLost', false)
+    reactLocalStorage.set('hasWon', false)
     appStore.setGameHasLost(false)
+    appStore.setGameHasWon(false)
     appStore.updateGameState(newMapState.new_map_state)
   }
 
@@ -72,7 +86,10 @@ class Home extends React.Component {
           onCellClick={move => this.handleCellClick(move)}
           onCellRightClick={move => this.handleCellClick(move)}
         />
-        {appStore.hasLost && <p className="result">Wow, you just killed a bro! Sad!</p>}
+        {appStore.hasLost && (
+          <p className="result result__lost">Wow, you just killed a bro! Sad!</p>
+        )}
+        {appStore.hasWon && <p className="result result__won">Congrats! You saved a bro, bro!</p>}
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
           RESET
         </div>

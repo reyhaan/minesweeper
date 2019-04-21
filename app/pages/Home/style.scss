@@ -22,8 +22,15 @@
     position: relative;
     font-size: 14px;
     top: 395px;
-    color: #e04e4e;
     text-align: center;
+
+    &__lost {
+      color: #e04e4e;
+    }
+
+    &__won {
+      color: #1bab4d;
+    }
   }
 
   .btn {
@@ -38,6 +45,7 @@
     text-align: center;
     padding: 10px;
     border-radius: 20px;
+    letter-spacing: 2px;
     cursor: pointer;
     text-shadow: 1px 1px 1px #00000078;
   }

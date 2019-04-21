@@ -45881,8 +45881,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export const host = 'http://localhost:8000/api/v1'
-var host = 'http://138.197.139.181:8000/api/v1';
+var host = 'http://localhost:8000/api/v1'; // export const host = 'http://138.197.139.181:8000/api/v1'
+
 exports.host = host;
 
 var request = _axios.default.create({
@@ -46263,7 +46263,7 @@ exports.default = void 0;
 
 var _mobx = require("mobx");
 
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -46295,6 +46295,8 @@ function () {
     _initializerDefineProperty(this, "mapState", _descriptor4, this);
 
     _initializerDefineProperty(this, "hasLost", _descriptor5, this);
+
+    _initializerDefineProperty(this, "hasWon", _descriptor6, this);
   }
 
   _createClass(AppStore, [{
@@ -46306,6 +46308,16 @@ function () {
     key: "getGameLost",
     value: function getGameLost() {
       return this.hasLost;
+    }
+  }, {
+    key: "setGameHasWon",
+    value: function setGameHasWon(result) {
+      this.hasWon = result;
+    }
+  }, {
+    key: "getGameWon",
+    value: function getGameWon() {
+      return this.hasWon;
     }
   }, {
     key: "getGame",
@@ -46384,7 +46396,12 @@ function () {
   enumerable: true,
   writable: true,
   initializer: null
-}), _applyDecoratedDescriptor(_class.prototype, "setGameHasLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "updateGameState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateGameState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getMapState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setMapState"), _class.prototype)), _class);
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "hasWon", [_mobx.observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _applyDecoratedDescriptor(_class.prototype, "setGameHasLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameLost", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameLost"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGameHasWon", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGameHasWon"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGameWon", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGameWon"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setGame", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setGame"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setUuid", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setUuid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setName", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setName"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "updateGameState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateGameState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "getMapState"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "setMapState", [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, "setMapState"), _class.prototype)), _class);
 exports.default = AppStore;
 },{"mobx":"node_modules/mobx/lib/mobx.module.js"}],"app/stores/index.js":[function(require,module,exports) {
 "use strict";
@@ -46712,7 +46729,7 @@ function (_React$Component) {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var game, hasLost, params, new_game;
+        var game, hasLost, hasWon, params, new_game;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -46721,29 +46738,32 @@ function (_React$Component) {
                 game = _reactjsLocalstorage.reactLocalStorage.getObject('game');
 
                 if (!(Object.keys(game).length !== 0)) {
-                  _context.next = 7;
+                  _context.next = 9;
                   break;
                 }
 
                 hasLost = _reactjsLocalstorage.reactLocalStorage.getObject('hasLost');
+                hasWon = _reactjsLocalstorage.reactLocalStorage.getObject('hasWon');
 
                 _stores.appStore.setGame(game);
 
                 _stores.appStore.setGameHasLost(JSON.parse(hasLost));
 
-                _context.next = 14;
+                _stores.appStore.setGameHasWon(JSON.parse(hasWon));
+
+                _context.next = 16;
                 break;
 
-              case 7:
+              case 9:
                 params = {
                   name: 'random name',
                   uuid: (0, _uuid.default)(),
                   map_state: '[]'
                 };
-                _context.next = 10;
+                _context.next = 12;
                 return (0, _map.createNewGame)(params);
 
-              case 10:
+              case 12:
                 new_game = _context.sent;
                 new_game['map_state'] = JSON.parse(new_game['map_state']);
 
@@ -46751,7 +46771,7 @@ function (_React$Component) {
 
                 _stores.appStore.setGame(new_game);
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -46776,7 +46796,7 @@ function (_React$Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_stores.appStore.getGameLost() || JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasLost')))) {
+                if (!(_stores.appStore.getGameWon() || _stores.appStore.getGameLost() || JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasLost')) || JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasWon')))) {
                   _context2.next = 2;
                   break;
                 }
@@ -46798,6 +46818,14 @@ function (_React$Component) {
                   _reactjsLocalstorage.reactLocalStorage.setObject('game', _stores.appStore.getGame());
 
                   _reactjsLocalstorage.reactLocalStorage.set('hasLost', true);
+                } else if (newMapState.hasWon) {
+                  _stores.appStore.setGameHasWon(true);
+
+                  _stores.appStore.updateGameState(newMapState.new_map_state);
+
+                  _reactjsLocalstorage.reactLocalStorage.setObject('game', _stores.appStore.getGame());
+
+                  _reactjsLocalstorage.reactLocalStorage.set('hasWon', true);
                 } else {
                   _stores.appStore.updateGameState(newMapState.new_map_state);
 
@@ -46844,11 +46872,15 @@ function (_React$Component) {
 
                 _reactjsLocalstorage.reactLocalStorage.set('hasLost', false);
 
+                _reactjsLocalstorage.reactLocalStorage.set('hasWon', false);
+
                 _stores.appStore.setGameHasLost(false);
+
+                _stores.appStore.setGameHasWon(false);
 
                 _stores.appStore.updateGameState(newMapState.new_map_state);
 
-              case 8:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -46883,8 +46915,10 @@ function (_React$Component) {
           return _this.handleCellClick(move);
         }
       }), _stores.appStore.hasLost && _react.default.createElement("p", {
-        className: "result"
-      }, "Wow, you just killed a bro! Sad!"), _react.default.createElement("div", {
+        className: "result result__lost"
+      }, "Wow, you just killed a bro! Sad!"), _stores.appStore.hasWon && _react.default.createElement("p", {
+        className: "result result__won"
+      }, "Congrats! You saved a bro, bro!"), _react.default.createElement("div", {
         className: "btn btn__get-new",
         onClick: function onClick() {
           return _this.handleNewMapClick();
