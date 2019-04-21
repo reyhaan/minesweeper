@@ -27,6 +27,6 @@ export async function makeMove(game, move) {
     move: move,
   }
   const response = await request.put('/game/move/', params)
-  console.log(response.data)
+  // console.log(response.data)
   return response.data
 }
