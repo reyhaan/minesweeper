@@ -10,25 +10,40 @@ import './style.scss'
 
 @observer
 class Home extends React.Component {
+  setNewGame(new_game) {
+    new_game['map_state'] = JSON.parse(new_game['map_state'])
+    reactLocalStorage.setObject('game', new_game)
+    reactLocalStorage.set('hasWon', false)
+    reactLocalStorage.set('hasLost', false)
+    appStore.setGame(new_game)
+  }
+
   async componentDidMount() {
-    // reactLocalStorage.setObject('game', {})
-    var game = reactLocalStorage.getObject('game')
-    if (Object.keys(game).length !== 0) {
-      var hasLost = reactLocalStorage.getObject('hasLost')
-      var hasWon = reactLocalStorage.getObject('hasWon')
-      appStore.setGame(game)
-      appStore.setGameHasLost(JSON.parse(hasLost))
-      appStore.setGameHasWon(JSON.parse(hasWon))
-    } else {
-      var params = {
-        name: 'random name',
-        uuid: uuidv1(),
-        map_state: '[]',
+    var params = {
+      name: 'random name',
+      uuid: uuidv1(),
+      map_state: '[]',
+    }
+    var savedGame = reactLocalStorage.getObject('game')
+
+    if (Object.keys(savedGame).length !== 0) {
+      // find if local session is present at server
+      var game = await getMap(savedGame.uuid)
+
+      // local game is not in sync with server
+      if (game.status === 404) {
+        var new_game = await createNewGame(params)
+        this.setNewGame(new_game)
+
+        // local game is synced with server
+      } else {
+        appStore.setGame(game)
+        appStore.setGameHasLost(JSON.parse(reactLocalStorage.get('hasLost')))
+        appStore.setGameHasWon(JSON.parse(reactLocalStorage.get('hasWon')))
       }
+    } else {
       var new_game = await createNewGame(params)
-      new_game['map_state'] = JSON.parse(new_game['map_state'])
-      reactLocalStorage.setObject('game', new_game)
-      appStore.setGame(new_game)
+      this.setNewGame(new_game)
     }
   }
 
@@ -57,18 +72,15 @@ class Home extends React.Component {
   }
 
   async handleNewMapClick() {
-    var newMapState = await getNewMap(appStore.getGame())
-    var params = {
-      name: newMapState.user.name,
-      uuid: newMapState.user.uuid,
-      map_state: newMapState.new_map_state,
-    }
-    reactLocalStorage.setObject('game', params)
-    reactLocalStorage.set('hasLost', false)
-    reactLocalStorage.set('hasWon', false)
+    var newMap = await getNewMap(appStore.getGame())
     appStore.setGameHasLost(false)
     appStore.setGameHasWon(false)
-    appStore.updateGameState(newMapState.new_map_state)
+    appStore.updateGameState(newMap.new_map_state)
+
+    // TODO: Find a better way to sync local storage state
+    reactLocalStorage.setObject('game', appStore.getGame())
+    reactLocalStorage.set('hasLost', false)
+    reactLocalStorage.set('hasWon', false)
   }
 
   render() {

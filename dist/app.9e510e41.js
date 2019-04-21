@@ -45875,14 +45875,14 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.request = exports.host = void 0;
+exports.showError = exports.request = exports.host = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export const host = 'http://localhost:8000/api/v1'
-var host = 'http://138.197.139.181:8000/api/v1';
+var host = 'http://localhost:8000/api/v1'; // export const host = 'http://138.197.139.181:8000/api/v1'
+
 exports.host = host;
 
 var request = _axios.default.create({
@@ -45891,6 +45891,16 @@ var request = _axios.default.create({
 });
 
 exports.request = request;
+
+var showError = function showError(error) {
+  return {
+    hasError: true,
+    status: 404,
+    error: error
+  };
+};
+
+exports.showError = showError;
 },{"axios":"node_modules/axios/index.js"}],"app/actions/map/index.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -45921,19 +45931,25 @@ function _createNewGame() {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            _context.prev = 0;
+            _context.next = 3;
             return _httpUtils.request.post('/game/', params);
 
-          case 2:
+          case 3:
             response = _context.sent;
             return _context.abrupt("return", response.data);
 
-          case 4:
+          case 7:
+            _context.prev = 7;
+            _context.t0 = _context["catch"](0);
+            return _context.abrupt("return", (0, _httpUtils.showError)(_context.t0));
+
+          case 10:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee);
+    }, _callee, null, [[0, 7]]);
   }));
   return _createNewGame.apply(this, arguments);
 }
@@ -45946,28 +45962,35 @@ function _getNewMap() {
   _getNewMap = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee2(game) {
-    var response;
+    var params, response;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
-            return _httpUtils.request.put('/game/new/', {
+            params = {
               uuid: game.uuid,
               name: game.name,
               map_state: '[]'
-            });
+            };
+            _context2.prev = 1;
+            _context2.next = 4;
+            return _httpUtils.request.put('/game/new/', params);
 
-          case 2:
+          case 4:
             response = _context2.sent;
             return _context2.abrupt("return", response.data);
 
-          case 4:
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](1);
+            return _context2.abrupt("return", (0, _httpUtils.showError)(_context2.t0));
+
+          case 11:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2);
+    }, _callee2, null, [[1, 8]]);
   }));
   return _getNewMap.apply(this, arguments);
 }
@@ -45985,19 +46008,25 @@ function _getMap() {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.next = 2;
+            _context3.prev = 0;
+            _context3.next = 3;
             return _httpUtils.request.get('/game/' + uuid + '/');
 
-          case 2:
+          case 3:
             response = _context3.sent;
             return _context3.abrupt("return", response.data);
 
-          case 4:
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
+            return _context3.abrupt("return", (0, _httpUtils.showError)(_context3.t0));
+
+          case 10:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3);
+    }, _callee3, null, [[0, 7]]);
   }));
   return _getMap.apply(this, arguments);
 }
@@ -46021,19 +46050,25 @@ function _makeMove() {
               map_state: JSON.stringify(game.map_state),
               move: move
             };
-            _context4.next = 3;
+            _context4.prev = 1;
+            _context4.next = 4;
             return _httpUtils.request.put('/game/move/', params);
 
-          case 3:
+          case 4:
             response = _context4.sent;
             return _context4.abrupt("return", response.data);
 
-          case 5:
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](1);
+            return _context4.abrupt("return", (0, _httpUtils.showError)(_context4.t0));
+
+          case 11:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4);
+    }, _callee4, null, [[1, 8]]);
   }));
   return _makeMove.apply(this, arguments);
 }
@@ -46723,59 +46758,87 @@ function (_React$Component) {
   }
 
   _createClass(Home, [{
+    key: "setNewGame",
+    value: function setNewGame(new_game) {
+      new_game['map_state'] = JSON.parse(new_game['map_state']);
+
+      _reactjsLocalstorage.reactLocalStorage.setObject('game', new_game);
+
+      _reactjsLocalstorage.reactLocalStorage.set('hasWon', false);
+
+      _reactjsLocalstorage.reactLocalStorage.set('hasLost', false);
+
+      _stores.appStore.setGame(new_game);
+    }
+  }, {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var game, hasLost, hasWon, params, new_game;
+        var params, savedGame, game, new_game;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // reactLocalStorage.setObject('game', {})
-                game = _reactjsLocalstorage.reactLocalStorage.getObject('game');
-
-                if (!(Object.keys(game).length !== 0)) {
-                  _context.next = 9;
-                  break;
-                }
-
-                hasLost = _reactjsLocalstorage.reactLocalStorage.getObject('hasLost');
-                hasWon = _reactjsLocalstorage.reactLocalStorage.getObject('hasWon');
-
-                _stores.appStore.setGame(game);
-
-                _stores.appStore.setGameHasLost(JSON.parse(hasLost));
-
-                _stores.appStore.setGameHasWon(JSON.parse(hasWon));
-
-                _context.next = 16;
-                break;
-
-              case 9:
                 params = {
                   name: 'random name',
                   uuid: (0, _uuid.default)(),
                   map_state: '[]'
                 };
-                _context.next = 12;
+                savedGame = _reactjsLocalstorage.reactLocalStorage.getObject('game');
+
+                if (!(Object.keys(savedGame).length !== 0)) {
+                  _context.next = 18;
+                  break;
+                }
+
+                _context.next = 5;
+                return (0, _map.getMap)(savedGame.uuid);
+
+              case 5:
+                game = _context.sent;
+
+                if (!(game.status === 404)) {
+                  _context.next = 13;
+                  break;
+                }
+
+                _context.next = 9;
                 return (0, _map.createNewGame)(params);
 
-              case 12:
+              case 9:
                 new_game = _context.sent;
-                new_game['map_state'] = JSON.parse(new_game['map_state']);
+                this.setNewGame(new_game); // local game is synced with server
 
-                _reactjsLocalstorage.reactLocalStorage.setObject('game', new_game);
+                _context.next = 16;
+                break;
 
-                _stores.appStore.setGame(new_game);
+              case 13:
+                _stores.appStore.setGame(game);
+
+                _stores.appStore.setGameHasLost(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasLost')));
+
+                _stores.appStore.setGameHasWon(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasWon')));
 
               case 16:
+                _context.next = 22;
+                break;
+
+              case 18:
+                _context.next = 20;
+                return (0, _map.createNewGame)(params);
+
+              case 20:
+                new_game = _context.sent;
+                this.setNewGame(new_game);
+
+              case 22:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function componentDidMount() {
@@ -46843,7 +46906,7 @@ function (_React$Component) {
       var _handleNewMapClick = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3() {
-        var newMapState, params;
+        var newMap;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -46852,26 +46915,22 @@ function (_React$Component) {
                 return (0, _map.getNewMap)(_stores.appStore.getGame());
 
               case 2:
-                newMapState = _context3.sent;
-                params = {
-                  name: newMapState.user.name,
-                  uuid: newMapState.user.uuid,
-                  map_state: newMapState.new_map_state
-                };
-
-                _reactjsLocalstorage.reactLocalStorage.setObject('game', params);
-
-                _reactjsLocalstorage.reactLocalStorage.set('hasLost', false);
-
-                _reactjsLocalstorage.reactLocalStorage.set('hasWon', false);
+                newMap = _context3.sent;
 
                 _stores.appStore.setGameHasLost(false);
 
                 _stores.appStore.setGameHasWon(false);
 
-                _stores.appStore.updateGameState(newMapState.new_map_state);
+                _stores.appStore.updateGameState(newMap.new_map_state); // TODO: Find a better way to sync local storage state
 
-              case 10:
+
+                _reactjsLocalstorage.reactLocalStorage.setObject('game', _stores.appStore.getGame());
+
+                _reactjsLocalstorage.reactLocalStorage.set('hasLost', false);
+
+                _reactjsLocalstorage.reactLocalStorage.set('hasWon', false);
+
+              case 9:
               case "end":
                 return _context3.stop();
             }
@@ -60166,7 +60225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54262" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54235" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
