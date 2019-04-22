@@ -44,6 +44,9 @@ class Home extends React.Component {
         appStore.setGame(game)
         appStore.setGameHasLost(JSON.parse(reactLocalStorage.get('hasLost')))
         appStore.setGameHasWon(JSON.parse(reactLocalStorage.get('hasWon')))
+        this.props.history.push({
+          pathname: '/' + game.uuid,
+        })
       }
     } else {
       var new_game = await createNewGame(params)
