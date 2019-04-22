@@ -22,8 +22,7 @@ class Index extends React.Component {
       <Router>
         <Provider stores={stores}>
           <Switch>
-            <Route path="/app" component={App} />
-            <Route exact path="/" component={App} />
+            <Route path="/" component={App} />
           </Switch>
         </Provider>
       </Router>

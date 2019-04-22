@@ -46266,8 +46266,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export const host = 'http://localhost:8000/api/v1'
-var host = 'http://138.197.139.181:8000/api/v1';
+var host = 'http://localhost:8000/api/v1'; // export const host = 'http://138.197.139.181:8000/api/v1'
+
 exports.host = host;
 
 var request = _axios.default.create({
@@ -46441,19 +46441,20 @@ function _makeMove() {
 
           case 4:
             response = _context4.sent;
+            console.log(response.data);
             return _context4.abrupt("return", response.data);
 
-          case 8:
-            _context4.prev = 8;
+          case 9:
+            _context4.prev = 9;
             _context4.t0 = _context4["catch"](1);
             return _context4.abrupt("return", (0, _httpUtils.showError)(_context4.t0));
 
-          case 11:
+          case 12:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[1, 8]]);
+    }, _callee4, null, [[1, 9]]);
   }));
   return _makeMove.apply(this, arguments);
 }
@@ -46775,11 +46776,10 @@ function (_React$Component) {
       _reactjsLocalstorage.reactLocalStorage.set('hasLost', false);
 
       _stores.appStore.setGame(new_game);
-    }
-  }, {
-    key: "setGameHash",
-    value: function setGameHash(uuid) {
-      window.location.hash = uuid;
+
+      this.props.history.push({
+        pathname: '/' + new_game.uuid
+      });
     }
   }, {
     key: "componentDidMount",
@@ -46798,59 +46798,54 @@ function (_React$Component) {
                   map_state: '[]'
                 };
                 savedGame = _reactjsLocalstorage.reactLocalStorage.getObject('game');
-                uuid = window.location.hash.split('');
-                uuid = uuid.splice(1, uuid.length).join('');
+                uuid = this.props.match.params.uuid;
 
-                if (!(Object.keys(savedGame).length !== 0)) {
-                  _context.next = 22;
+                if (!(Object.keys(savedGame).length !== 0 || Object.keys(savedGame).length === 0 && uuid)) {
+                  _context.next = 19;
                   break;
                 }
 
-                _context.next = 7;
+                _context.next = 6;
                 return (0, _map.getMap)(uuid || savedGame.uuid);
 
-              case 7:
+              case 6:
                 game = _context.sent;
 
                 if (!(game.status === 404)) {
-                  _context.next = 16;
+                  _context.next = 14;
                   break;
                 }
 
-                _context.next = 11;
+                _context.next = 10;
                 return (0, _map.createNewGame)(params);
 
-              case 11:
+              case 10:
                 new_game = _context.sent;
-                this.setNewGame(new_game);
-                this.setGameHash(new_game.uuid); // local game is synced with server, we can update the states for the game
+                this.setNewGame(new_game); // local game is synced with server, we can update the states for the game
 
-                _context.next = 20;
+                _context.next = 17;
                 break;
 
-              case 16:
+              case 14:
                 _stores.appStore.setGame(game);
 
                 _stores.appStore.setGameHasLost(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasLost')));
 
                 _stores.appStore.setGameHasWon(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasWon')));
 
-                this.setGameHash(game.uuid);
-
-              case 20:
-                _context.next = 27;
+              case 17:
+                _context.next = 23;
                 break;
 
-              case 22:
-                _context.next = 24;
+              case 19:
+                _context.next = 21;
                 return (0, _map.createNewGame)(params);
 
-              case 24:
+              case 21:
                 new_game = _context.sent;
                 this.setNewGame(new_game);
-                this.setGameHash(new_game.uuid);
 
-              case 27:
+              case 23:
               case "end":
                 return _context.stop();
             }
@@ -47048,7 +47043,9 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
-        exact: true,
+        path: "/:uuid",
+        component: _Home.default
+      }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/",
         component: _Home.default
       }));
@@ -60191,10 +60188,6 @@ function (_React$Component) {
       return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_mobxReact.Provider, {
         stores: _stores.stores
       }, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
-        path: "/app",
-        component: _App.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
-        exact: true,
         path: "/",
         component: _App.default
       }))));

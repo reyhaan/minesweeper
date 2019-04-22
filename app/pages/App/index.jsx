@@ -6,7 +6,8 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route path="/:uuid" component={Home} />
+        <Route path="/" component={Home} />
       </Switch>
     )
   }
