@@ -33,21 +33,22 @@
 }
 .map-container .cell__has-mine {
   background-image: url("/mine.5dc3d5c9.png");
-  background-color: #000;
+  background-color: #171717;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 40%;
 }
 .map-container .cell__flagged {
   background-image: url("/flag.92a72192.png");
-  background-color: white;
+  background-color: #28292d;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 45%;
+  filter: hue-rotate(160deg);
 }
 .map-container .cell__flagged--has-mine {
   background-image: url("/mine.5dc3d5c9.png");
-  background-color: #cc2626;
+  background-color: #0c732b;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 45%;

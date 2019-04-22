@@ -38,7 +38,7 @@
 
     &__has-mine {
       background-image: url('../../assets/mine.png');
-      background-color: #000;
+      background-color: #171717;
       background-position: center;
       background-repeat: no-repeat;
       background-size: 40%;
@@ -46,15 +46,16 @@
 
     &__flagged {
       background-image: url('../../assets/flag.png');
-      background-color: rgb(255, 255, 255);
+      background-color: #28292d;
       background-position: center;
       background-repeat: no-repeat;
       background-size: 45%;
+      filter: hue-rotate(160deg);
     }
 
     &__flagged--has-mine {
       background-image: url('../../assets/mine.png');
-      background-color: rgb(204, 38, 38);
+      background-color: #0c732b;
       background-position: center;
       background-repeat: no-repeat;
       background-size: 45%;
