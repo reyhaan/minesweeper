@@ -46441,20 +46441,19 @@ function _makeMove() {
 
           case 4:
             response = _context4.sent;
-            console.log(response.data);
             return _context4.abrupt("return", response.data);
 
-          case 9:
-            _context4.prev = 9;
+          case 8:
+            _context4.prev = 8;
             _context4.t0 = _context4["catch"](1);
             return _context4.abrupt("return", (0, _httpUtils.showError)(_context4.t0));
 
-          case 12:
+          case 11:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[1, 9]]);
+    }, _callee4, null, [[1, 8]]);
   }));
   return _makeMove.apply(this, arguments);
 }
