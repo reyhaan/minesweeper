@@ -103,7 +103,7 @@ class Home extends React.Component {
           onCellClick={move => this.handleCellClick(move)}
           onCellRightClick={move => this.handleCellClick(move)}
         />
-        {appStore.hasLost && <p className="result result__lost">Woah! You just killed a bro!</p>}
+        {appStore.hasLost && <p className="result result__lost">Woah! Bro just died!</p>}
         {appStore.hasWon && <p className="result result__won">Congrats! You saved a bro, bro!</p>}
         <div className="btn btn__get-new" onClick={() => this.handleNewMapClick()}>
           RESET

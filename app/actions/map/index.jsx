@@ -43,6 +43,7 @@ export async function makeMove(game, move) {
 
   try {
     const response = await request.put('/game/move/', params)
+    console.log(response.data)
     return response.data
   } catch (e) {
     return showError(e)

@@ -46,7 +46,15 @@
 
     &__flagged {
       background-image: url('../../assets/flag.png');
-      background-color: #000;
+      background-color: rgb(255, 255, 255);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 45%;
+    }
+
+    &__flagged--has-mine {
+      background-image: url('../../assets/mine.png');
+      background-color: rgb(204, 38, 38);
       background-position: center;
       background-repeat: no-repeat;
       background-size: 45%;

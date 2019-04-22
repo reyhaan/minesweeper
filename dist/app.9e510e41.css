@@ -40,7 +40,14 @@
 }
 .map-container .cell__flagged {
   background-image: url("/flag.92a72192.png");
-  background-color: #000;
+  background-color: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 45%;
+}
+.map-container .cell__flagged--has-mine {
+  background-image: url("/mine.5dc3d5c9.png");
+  background-color: #cc2626;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 45%;

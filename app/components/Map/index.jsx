@@ -21,6 +21,7 @@ class Map extends React.Component {
     if (
       classes.indexOf('cell__revealed') !== -1 ||
       classes.indexOf('cell__value') !== -1 ||
+      classes.indexOf('cell__flagged') !== -1 ||
       classes.indexOf('cell__has-mine') !== -1
     ) {
       return
@@ -55,6 +56,8 @@ class Map extends React.Component {
         cellClass = 'cell__has-mine'
       } else if (cell.state === 3) {
         cellClass = 'cell__flagged'
+      } else if (cell.state === 4) {
+        cellClass = 'cell__flagged--has-mine'
       }
 
       return (

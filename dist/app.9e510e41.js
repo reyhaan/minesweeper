@@ -44567,7 +44567,7 @@ function (_React$Component) {
     value: function handleCellClick(event) {
       var classes = event.target.classList.value;
 
-      if (classes.indexOf('cell__revealed') !== -1 || classes.indexOf('cell__value') !== -1 || classes.indexOf('cell__has-mine') !== -1) {
+      if (classes.indexOf('cell__revealed') !== -1 || classes.indexOf('cell__value') !== -1 || classes.indexOf('cell__flagged') !== -1 || classes.indexOf('cell__has-mine') !== -1) {
         return;
       }
 
@@ -44606,6 +44606,8 @@ function (_React$Component) {
           cellClass = 'cell__has-mine';
         } else if (cell.state === 3) {
           cellClass = 'cell__flagged';
+        } else if (cell.state === 4) {
+          cellClass = 'cell__flagged--has-mine';
         }
 
         return _react.default.createElement("div", {
@@ -46439,19 +46441,20 @@ function _makeMove() {
 
           case 4:
             response = _context4.sent;
+            console.log(response.data);
             return _context4.abrupt("return", response.data);
 
-          case 8:
-            _context4.prev = 8;
+          case 9:
+            _context4.prev = 9;
             _context4.t0 = _context4["catch"](1);
             return _context4.abrupt("return", (0, _httpUtils.showError)(_context4.t0));
 
-          case 11:
+          case 12:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[1, 8]]);
+    }, _callee4, null, [[1, 9]]);
   }));
   return _makeMove.apply(this, arguments);
 }
@@ -46981,7 +46984,7 @@ function (_React$Component) {
         }
       }), _stores.appStore.hasLost && _react.default.createElement("p", {
         className: "result result__lost"
-      }, "Woah! You just killed a bro!"), _stores.appStore.hasWon && _react.default.createElement("p", {
+      }, "Woah! Bro just died!"), _stores.appStore.hasWon && _react.default.createElement("p", {
         className: "result result__won"
       }, "Congrats! You saved a bro, bro!"), _react.default.createElement("div", {
         className: "btn btn__get-new",
