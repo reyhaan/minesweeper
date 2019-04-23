@@ -42,8 +42,10 @@ class Home extends React.Component {
         // local game is synced with server, we can update the states for the game
       } else {
         appStore.setGame(game)
-        appStore.setGameHasLost(JSON.parse(reactLocalStorage.get('hasLost')))
-        appStore.setGameHasWon(JSON.parse(reactLocalStorage.get('hasWon')))
+        appStore.setGameHasLost(game.hasLost)
+        appStore.setGameHasWon(game.hasWon)
+        reactLocalStorage.set('hasLost', game.hasLost)
+        reactLocalStorage.set('hasWon', game.hasWon)
         this.props.history.push({
           pathname: '/' + game.uuid,
         })

@@ -46800,7 +46800,7 @@ function (_React$Component) {
                 uuid = this.props.match.params.uuid;
 
                 if (!(Object.keys(savedGame).length !== 0 || Object.keys(savedGame).length === 0 && uuid)) {
-                  _context.next = 20;
+                  _context.next = 22;
                   break;
                 }
 
@@ -46822,33 +46822,37 @@ function (_React$Component) {
                 new_game = _context.sent;
                 this.setNewGame(new_game); // local game is synced with server, we can update the states for the game
 
-                _context.next = 18;
+                _context.next = 20;
                 break;
 
               case 14:
                 _stores.appStore.setGame(game);
 
-                _stores.appStore.setGameHasLost(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasLost')));
+                _stores.appStore.setGameHasLost(game.hasLost);
 
-                _stores.appStore.setGameHasWon(JSON.parse(_reactjsLocalstorage.reactLocalStorage.get('hasWon')));
+                _stores.appStore.setGameHasWon(game.hasWon);
+
+                _reactjsLocalstorage.reactLocalStorage.set('hasLost', game.hasLost);
+
+                _reactjsLocalstorage.reactLocalStorage.set('hasWon', game.hasWon);
 
                 this.props.history.push({
                   pathname: '/' + game.uuid
                 });
 
-              case 18:
-                _context.next = 24;
+              case 20:
+                _context.next = 26;
                 break;
 
-              case 20:
-                _context.next = 22;
+              case 22:
+                _context.next = 24;
                 return (0, _map.createNewGame)(params);
 
-              case 22:
+              case 24:
                 new_game = _context.sent;
                 this.setNewGame(new_game);
 
-              case 24:
+              case 26:
               case "end":
                 return _context.stop();
             }
